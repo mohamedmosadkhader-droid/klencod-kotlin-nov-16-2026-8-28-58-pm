@@ -1,0 +1,187 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Bareeq customer or staff profile with Egyptian phone and loyalty points.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "description": "Verified Google email" },
+        "fullName": { "type": "string", "description": "Customer display name" },
+        "phone": { "type": "string", "description": "Egyptian mobile number" },
+        "role": { "type": "string", "enum": ["customer", "staff", "owner"], "description": "Account role" },
+        "loyaltyPoints": { "type": "integer", "description": "Accumulated Bareeq loyalty points" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp" }
+      },
+      "required": ["userId", "fullName", "role", "loyaltyPoints", "createdAt", "updatedAt"]
+    },
+    "LoyaltyEntry": {
+      "title": "LoyaltyEntry",
+      "description": "Append-only loyalty point transaction record.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "orderNumber": { "type": "string" },
+        "pointsDelta": { "type": "integer" },
+        "reason": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "orderNumber", "pointsDelta", "reason", "createdAt"]
+    },
+    "StaffPermission": {
+      "title": "StaffPermission",
+      "description": "Granular staff permissions assigned by the Bareeq store owner.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "canAddProducts": { "type": "boolean" },
+        "canDeleteProducts": { "type": "boolean" },
+        "canManageDiscounts": { "type": "boolean" },
+        "canManageOrders": { "type": "boolean" },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "displayName", "canAddProducts", "canDeleteProducts", "canManageDiscounts", "canManageOrders", "isActive", "createdAt", "updatedAt"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Car accessory catalog product priced in EGP.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "price": { "type": "number" },
+        "oldPrice": { "type": "number" },
+        "stock": { "type": "integer" },
+        "badge": { "type": "string" },
+        "description": { "type": "string" },
+        "drawableKey": { "type": "string" },
+        "isFeatured": { "type": "boolean" },
+        "isActive": { "type": "boolean" },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "category", "price", "stock", "description", "drawableKey", "isFeatured", "isActive", "createdAt", "updatedAt"]
+    },
+    "Coupon": {
+      "title": "Coupon",
+      "description": "Discount coupon code for EGP checkout.",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string" },
+        "discountType": { "type": "string", "enum": ["percent", "fixed"] },
+        "discountValue": { "type": "number" },
+        "minOrderTotal": { "type": "number" },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["code", "discountType", "discountValue", "minOrderTotal", "isActive", "createdAt", "updatedAt"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer order across all 27 Egyptian governorates with Egyptian payment methods.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "orderNumber": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "governorate": { "type": "string" },
+        "shippingAddress": { "type": "string" },
+        "notes": { "type": "string" },
+        "paymentMethod": { "type": "string", "enum": ["cod", "wallet", "instapay", "bank", "whatsapp"] },
+        "transferReference": { "type": "string" },
+        "couponCode": { "type": "string" },
+        "itemsSummary": { "type": "string" },
+        "primaryProductId": { "type": "string" },
+        "primaryProductName": { "type": "string" },
+        "subtotal": { "type": "number" },
+        "shippingFee": { "type": "number" },
+        "discountAmount": { "type": "number" },
+        "total": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "processing", "shipped", "delivered", "cancelled"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "orderNumber", "customerName", "customerPhone", "governorate", "shippingAddress", "paymentMethod", "itemsSummary", "primaryProductId", "primaryProductName", "subtotal", "shippingFee", "discountAmount", "total", "status", "createdAt", "updatedAt"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Verified customer rating for product & store with optional compressed photo.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "orderNumber": { "type": "string" },
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "customerName": { "type": "string" },
+        "governorate": { "type": "string" },
+        "storeRating": { "type": "integer" },
+        "productRating": { "type": "integer" },
+        "comment": { "type": "string" },
+        "photoBase64": { "type": "string" },
+        "isApproved": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "orderNumber", "productName", "customerName", "governorate", "storeRating", "productRating", "comment", "isApproved", "createdAt"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Installation & car care appointment booking.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "governorate": { "type": "string" },
+        "carModel": { "type": "string" },
+        "serviceType": { "type": "string" },
+        "preferredDate": { "type": "string" },
+        "notes": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "completed", "cancelled"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "customerName", "customerPhone", "governorate", "carModel", "serviceType", "preferredDate", "status", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Customer profiles and loyalty point balances."
+    },
+    "/users/{userId}/loyalty_ledger/{entryId}": {
+      "schema": { "$ref": "#/entities/LoyaltyEntry" },
+      "description": "Append-only loyalty point ledger per user."
+    },
+    "/staff_permissions/{staffEmail}": {
+      "schema": { "$ref": "#/entities/StaffPermission" },
+      "description": "Staff RBAC permissions managed exclusively by the store owner."
+    },
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Active car accessory catalog items."
+    },
+    "/coupons/{couponCode}": {
+      "schema": { "$ref": "#/entities/Coupon" },
+      "description": "Store discount coupons."
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Customer orders across Egypt."
+    },
+    "/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/Review" },
+      "description": "Customer reviews with product/store ratings and photos."
+    },
+    "/bookings/{bookingId}": {
+      "schema": { "$ref": "#/entities/Booking" },
+      "description": "Installation appointment bookings."
+    }
+  }
+}

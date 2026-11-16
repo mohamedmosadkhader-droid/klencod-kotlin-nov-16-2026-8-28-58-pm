@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">بريق</string>
+    <string name="brand_subtitle">لإكسسوارات السيارات — مصر</string>
+    <string name="sign_in_google">تسجيل الدخول بحساب Google</string>
+    <string name="nav_store">المتجر</string>
+    <string name="nav_account">حسابي</string>
+    <string name="nav_admin">الإدارة</string>
+    <string name="currency_egp">ج.م</string>
+    <string name="whatsapp_unavailable">تطبيق واتساب غير مثبت على الجهاز</string>
+</resources>

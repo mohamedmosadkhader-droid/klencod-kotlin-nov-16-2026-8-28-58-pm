@@ -1,0 +1,6 @@
+{
+  "name": "بريق",
+  "description": "متجر بريق لإكسسوارات السيارات في مصر: واجهة 3D تفاعلية، 27 محافظة، طرق دفع مصرية، آراء العملاء بالصور، ونظام صلاحيات المالك والموظفين.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
